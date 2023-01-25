@@ -44,7 +44,7 @@ float zprobe_zoffset;
 float last_zoffset = 0.0;
 
 //const float manual_feedrate_mm_m[] = {50 * 60, 50 * 60, 4 * 60, 60};
-const float manual_feedrate_mm_m[] = {100 * 60, 100 * 60, 10 * 60, 60};  // added by John Carlson to speed up travels
+const float manual_feedrate_mm_m[] = {100 * 60, 50 * 60, 10 * 60, 120};  // added by John Carlson to speed up travels
 
 int startprogress = 0;
 float pause_z = 0;
@@ -748,8 +748,17 @@ void RTSSHOW::RTS_SDcard_Stop()
     #endif
   }
   #ifdef EVENT_GCODE_SD_ABORT
-    queue.inject_P(PSTR(EVENT_GCODE_SD_ABORT));
+    char abtcmd[21] = "";
+    queue.inject(PSTR(EVENT_GCODE_SD_ABORT));
+    queue.inject(PSTR("G90"));
+    sprintf_P(abtcmd, PSTR("G1 Y%i\nM84"), Y_BED_SIZE);
+    queue.inject(abtcmd);
+
+    //queue.inject_P(PSTR(EVENT_GCODE_SD_ABORT));
+    //queue.inject_P(PSTR(abtcmd));
   #endif
+
+  planner.finish_and_disable();
 
   // shut down the stepper motor.
   // queue.enqueue_now_P(PSTR("M84"));
@@ -2236,6 +2245,7 @@ void RTSSHOW::RTS_HandleData()
         strcpy(cmdbuf, cmd);
 
         save_dual_x_carriage_mode = dualXPrintingModeStatus;
+        //SERIAL_ECHOLNPGM("dualXPrintingModeStatus: ", dualXPrintingModeStatus);
         
         switch(save_dual_x_carriage_mode)
         {
@@ -2753,6 +2763,7 @@ void SetExtruderMode(unsigned int mode, bool isDirect) {
   } else if (mode == 6)
   {
     save_dual_x_carriage_mode = dualXPrintingModeStatus;
+    //SERIAL_ECHOLNPGM("save_dual_x_carriage_mode: ", save_dual_x_carriage_mode);
     settings.save();
     rtscheck.RTS_SndData(ExchangePageBase + 1, ExchangepageAddr);
   } else {
