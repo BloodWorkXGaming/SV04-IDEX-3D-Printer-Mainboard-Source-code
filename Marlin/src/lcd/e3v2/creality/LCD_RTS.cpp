@@ -751,7 +751,7 @@ void RTSSHOW::RTS_SDcard_Stop()
     char abtcmd[21] = "";
     queue.inject(PSTR(EVENT_GCODE_SD_ABORT));
     queue.inject(PSTR("G90"));
-    sprintf_P(abtcmd, PSTR("G1 Y%i\nM84"), Y_BED_SIZE);
+    sprintf_P(abtcmd, PSTR("G1 Y%i F300\nM84"), Y_BED_SIZE);
     queue.inject(abtcmd);
 
     //queue.inject_P(PSTR(EVENT_GCODE_SD_ABORT));
