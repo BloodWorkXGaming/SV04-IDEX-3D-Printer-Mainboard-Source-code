@@ -932,14 +932,14 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 64, 80, 400, 415, 415 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 64, 80, 400, 435, 435 }
 
 /**
  * Default Max Feed Rate (mm/s)
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 500, 500, 20, 50, 50 }    // added by John Carlson to up limits
+#define DEFAULT_MAX_FEEDRATE          { 500, 500, 10, 30, 30 }    // added by John Carlson to up limits
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -968,8 +968,8 @@
  *   M204 T    Travel Acceleration
  */
 #define DEFAULT_ACCELERATION          500    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  800    // E acceleration for retracts // upped by John Carlson
-#define DEFAULT_TRAVEL_ACCELERATION   1000    // X, Y, Z acceleration for travel (non printing) moves // upped by John Carlson
+#define DEFAULT_RETRACT_ACCELERATION  700    // E acceleration for retracts // upped by John Carlson
+#define DEFAULT_TRAVEL_ACCELERATION   700    // X, Y, Z acceleration for travel (non printing) moves // upped by John Carlson
 
 /**
  * Default Jerk limits (mm/s)
